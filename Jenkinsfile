@@ -9,7 +9,7 @@ pipeline {
 
     stage('CompileandRunSonarAnalysis') {
       steps {
-        sh '''
+        bat '''
           mvn clean verify sonar:sonar \
             -Dsonar.projectKey=zesgbuggywebapp_zesgbuggywebapp \
             -Dsonar.organization=zesgbuggywebapp \
@@ -22,7 +22,7 @@ pipeline {
     stage('RunSCAAnalysisUsingSnyk') {
       steps {
         withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
-          sh '''
+          bat '''
             mvn snyk:test -fn
           '''
         }
